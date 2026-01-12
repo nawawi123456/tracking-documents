@@ -1,0 +1,214 @@
+/* Custom styles untuk ASN DocuFlow */
+
+/* Search and Filter Styles */
+.search-container {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    border: none;
+    border-radius: 8px;
+    background: #f8f9fa;
+    padding: 0.75rem 1rem;
+    font-size: 15px;
+}
+
+.search-input:focus {
+    box-shadow: none;
+    background: #f8f9fa;
+}
+
+.search-icon {
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+.filter-dropdown {
+    background: #f8f9fa;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 15px;
+    color: #495057;
+    cursor: pointer;
+    min-width: 140px;
+}
+
+.filter-dropdown:focus {
+    box-shadow: none;
+    background: #f8f9fa;
+}
+
+.filter-label {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 5px;
+}
+
+/* Document Card Styles */
+.card-document {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card-document:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.document-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6f42ff, #9b4dff);
+    color: white;
+    font-size: 24px;
+}
+
+.badge-outline {
+    background: transparent;
+    border: 1px solid;
+    font-weight: 500;
+    font-size: 11px;
+    padding: 4px 8px;
+}
+
+/* Profile/Document Detail Styles */
+.page-title-box {
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.document-header {
+    background: linear-gradient(135deg, #6f42ff, #9b4dff);
+    color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.info-badge {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.info-badge i {
+    margin-right: 5px;
+}
+
+.card-custom {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.card-custom .card-header {
+    background: transparent;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1.25rem 1.5rem;
+}
+
+.info-box {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.25rem;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.info-box:hover {
+    border-color: #6f42ff;
+    box-shadow: 0 0 0 1px rgba(111, 66, 255, 0.1);
+}
+
+.info-box small {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.info-box strong {
+    color: #212529;
+    font-size: 15px;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    padding-bottom: 20px;
+    border-left: 2px solid #6f42ff;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -9px;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    background: #6f42ff;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 0 0 3px rgba(111, 66, 255, 0.2);
+}
+
+/* Status Badge Colors */
+.badge-status-draft { background-color: #e3f2fd; color: #1976d2; }
+.badge-status-pending { background-color: #fff3e0; color: #f57c00; }
+.badge-status-approved { background-color: #e8f5e9; color: #388e3c; }
+.badge-status-rejected { background-color: #ffebee; color: #d32f2f; }
+.badge-status-completed { background-color: #e3f2fd; color: #0288d1; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .search-container {
+        padding: 1rem;
+    }
+    
+    .document-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .info-badge {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+/* Input Group Custom */
+.input-group-lg .input-group-text {
+    border-radius: 8px 0 0 8px;
+}
+
+.input-group-lg .form-control {
+    border-radius: 0;
+}
+
+.input-group-lg .btn {
+    border-radius: 0;
+}
+
+.input-group-lg .btn:last-child {
+    border-radius: 0 8px 8px 0;
+}
