@@ -1,2 +1,7 @@
-tracking docs.zip
+# Pilihan 1: Menggunakan tanda petik (Disarankan)
+"tracking docs.zip"
+
+# Pilihan 2: Mencegah SEMUA file zip agar tidak terikut (Paling Aman)
+*.zip
+
 .env
