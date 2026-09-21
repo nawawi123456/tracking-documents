@@ -24,15 +24,14 @@
                             aria-expanded="false"
                             style="position: relative;">
                         <i class="ri-user-line me-1"></i> 
-                        <?= $_SESSION['nama_lengkap']; ?> (<?= $_SESSION['nama_divisi']; ?>)
+                        <?= $_SESSION['nama_lengkap']; ?>
                         <i class="ri-arrow-down-s-line ms-2"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUserMenu">
                         <li>
                             <div class="dropdown-item-text">
-                                <div class="fw-semibold"><?= $_SESSION['nama_lengkap']; ?></div>
-                                <small class="text-muted"><i class="ri-building-line me-1"></i><?= $_SESSION['nama_divisi']; ?></small><br>
-                                <small class="text-muted"><i class="ri-user-star-line me-1"></i><?= $_SESSION['jabatan']; ?></small>
+                                <div class="fw-semibold"><?= $_SESSION['username']; ?></div>
+                                <small class="text-muted"><i class="ri-building-line me-1"></i><?= $_SESSION['nama_lengkap']; ?></small>
                             </div>
                         </li>
                         <li><hr class="dropdown-divider"></li>

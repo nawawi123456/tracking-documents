@@ -50,7 +50,7 @@
     <div class="text-center mt-3">
         <p class="text-muted" style="font-size:12px; margin:0;">Sistem Manajemen Dokumen Terintegrasi</p>
     </div>
-    <!-- <?php echo password_hash("123456", PASSWORD_DEFAULT); ?> -->
+    <?php //echo password_hash("123456", PASSWORD_DEFAULT); ?>
 </div>
 
 <!-- Bootstrap JS -->

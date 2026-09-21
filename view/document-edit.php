@@ -42,11 +42,13 @@
             box-shadow:0 4px 12px rgba(0,0,0,0.08);
         ">
 
+            <?php if (empty($_SESSION['csrf_token'])) { $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); } ?>
             <form action="layout/edit-proses.php" method="POST">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
                 <input type="hidden" name="document_id" value="<?= $doc['document_id'] ?>">
 
-                <!-- NOMOR + BARCODE -->
+                <!-- NOMOR -->
                 <div style="display:flex; gap:20px; margin-bottom:20px;">
 
                     <div style="flex:1;">
@@ -55,18 +57,7 @@
                             <i class="ri-hashtag text-primary"
                                style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
                             <input type="text" name="nomor_dokumen"
-                                   value="<?= $doc['nomor_dokumen'] ?>"
-                                   style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
-                        </div>
-                    </div>
-
-                    <div style="flex:1;">
-                        <label class="fw-bold">Kode Barcode</label>
-                        <div style="position:relative;">
-                            <i class="ri-barcode-box-line text-primary"
-                               style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
-                            <input type="text" name="kode_barcode"
-                                   value="<?= $doc['kode_barcode'] ?>"
+                                   value="<?= $doc['nomor_documen'] ?>"
                                    style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
                         </div>
                     </div>
@@ -139,12 +130,12 @@
 
                 <!-- TANGGAL -->
                 <div style="margin-bottom:25px;">
-                    <label class="fw-bold">Tanggal Tenggat</label>
+                    <label class="fw-bold">Tanggal Kirim</label>
                     <div style="position:relative;">
                         <i class="ri-calendar-line text-primary"
                            style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
-                        <input type="date" name="tanggal_tenggat"
-                               value="<?= $doc['tanggal_tenggat'] ?>"
+                        <input type="date" name="tanggal_kirim"
+                               value="<?= date('Y-m-d', strtotime($doc['tanggal_kirim'])) ?>"
                                style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
                     </div>
                 </div>

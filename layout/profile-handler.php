@@ -6,9 +6,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] !== true) {
 
 // Ambil data user dari database
 $user_id = $_SESSION['user_id'];
-$query = "SELECT u.*, d.nama_divisi
+$query = "SELECT u.*
           FROM users u
-          LEFT JOIN divisions d ON u.divisi_id = d.division_id
           WHERE u.user_id = ?";
 
 $stmt = mysqli_prepare($conn, $query);
@@ -25,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $nama_lengkap = mysqli_real_escape_string($conn, $_POST['nama_lengkap']);
     $username = mysqli_real_escape_string($conn, $_POST['username']);
     $divisi_id = mysqli_real_escape_string($conn, $_POST['divisi_id']);
+    $jabatan = mysqli_real_escape_string($conn, $_POST['jabatan']);
     
     // Cek apakah username sudah digunakan oleh user lain
     $check_query = "SELECT user_id FROM users WHERE username = ? AND user_id != ?";
@@ -36,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     if (mysqli_num_rows($check_result) > 0) {
         $error_message = 'Username sudah digunakan oleh user lain!';
     } else {
-        $update_query = "UPDATE users SET nama_lengkap = ?, username = ?, divisi_id = ? WHERE user_id = ?";
+        $update_query = "UPDATE users SET nama_lengkap = ?, username = ?, divisi_id = ?, jabatan = ? WHERE user_id = ?";
         $update_stmt = mysqli_prepare($conn, $update_query);
-        mysqli_stmt_bind_param($update_stmt, "ssss", $nama_lengkap, $username, $divisi_id, $user_id);
+        mysqli_stmt_bind_param($update_stmt, "sssss", $nama_lengkap, $username, $divisi_id, $jabatan, $user_id);
         
         $documents = "UPDATE documents set current_divisi_id = '$divisi_id' where penerima = '$user_id'";
         mysqli_query($conn, $documents);
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
             $_SESSION['nama_lengkap'] = $nama_lengkap;
             $_SESSION['username'] = $username;
             $_SESSION['divisi_id'] = $divisi_id;
+            $_SESSION['jabatan'] = $jabatan;
             $success_message = 'Profil berhasil diperbarui!';
             
             // Refresh data user
@@ -65,7 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 
 // Proses ganti password
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
-
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
@@ -78,7 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
     } elseif (strlen($new_password) < 6) {
         $error_message = 'Password minimal 6 karakter!';
     } else {
-
         // Hash password baru
         $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
 
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['change_password'])) {
 
         if (mysqli_stmt_execute($update_pass_stmt)) {
             $success_message = 'Password berhasil diubah!';
-            $user['password'] = $hashed_new_password; // refresh value
+            $user['password'] = $hashed_new_password;
         } else {
             $error_message = 'Gagal mengubah password!';
         }

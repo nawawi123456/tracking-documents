@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 require_once 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -17,10 +17,9 @@ if ($username === '' || $password === '') {
 
 $username = mysqli_real_escape_string($conn, $username);
 
-$query = "SELECT u.*, d.nama_divisi
-          FROM users u
-          LEFT JOIN divisions d ON u.divisi_id = d.division_id
-          WHERE u.username = '$username'";
+$query = "SELECT *
+          FROM users
+          WHERE username = '$username'";
 
 $result = mysqli_query($conn, $query);
 
@@ -36,9 +35,6 @@ if (password_verify($password, $user['password'])) {
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['username'] = $user['username'];
     $_SESSION['nama_lengkap'] = $user['nama_lengkap'];
-    $_SESSION['divisi_id'] = $user['divisi_id'];
-    $_SESSION['jabatan'] = $user['jabatan'];
-    $_SESSION['nama_divisi'] = $user['nama_divisi'];
 
     header('Location: ' . '../');
     exit;

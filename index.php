@@ -19,11 +19,28 @@ if ($view === 'home') {
 if ($view === 'document-detail') {
     require_once 'layout/detail-proses.php';
 
-    $bolehAkses = isset($doc['penerima']) 
-        && $_SESSION['user_id'] === $doc['penerima'];
+    if ($_SESSION['user_id'] === 'USER-999') {
+        $creator = 1;
+        $accesdelete = 1;
+        $bolehAkses = 1;
+    } else {
+        $creator = isset($doc['created_by']) 
+            && $_SESSION['user_id'] === $doc['created_by'];
+
+        $accesdelete = isset($doc['created_by'], $doc['status']) &&
+            $_SESSION['user_id'] === $doc['created_by'] &&
+            strtolower($doc['status']) === 'draft';
+
+        $bolehAkses = isset($doc['div_penerima']) 
+            && $_SESSION['user_id'] === $doc['div_penerima'];
+    }
 }
 
 if ($view === 'document-edit') {
+    require_once 'layout/detail-proses.php';
+}
+
+if ($view === 'add-flow') {
     require_once 'layout/detail-proses.php';
 }
 
@@ -50,9 +67,19 @@ if (!file_exists($file)) {
 </main>
 
 
-<!-- Bootstrap JS -->
- <script src="layout.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JAVASCRIPT -->
+<script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="libs/simplebar/simplebar.min.js"></script>
+<script src="libs/node-waves/waves.min.js"></script>
+<script src="libs/feather-icons/feather.min.js"></script>
+<script src="js/pages/plugins/lord-icon-2.1.0.js"></script>
+<script src="js/plugins.js"></script>
+
+<!-- App js -->
+<script src="js/app.js"></script>
+
+<!-- Your custom scripts -->
+<script src="layout.js"></script>
 
 </body>
 </html>

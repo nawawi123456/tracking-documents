@@ -2,7 +2,7 @@
 
     <div style="max-width:700px; margin:0 auto;">
 
-        <a href="?view=home"
+        <a href="?"
            class="d-inline-flex align-items-center"
            style="text-decoration:none; color:#555; font-size:15px; margin-bottom:15px;">
             <i class="ri-arrow-left-line" style="font-size:18px; margin-right:6px;"></i>
@@ -42,7 +42,9 @@
             box-shadow:0 4px 12px rgba(0,0,0,0.08);
         ">
 
+            <?php if (empty($_SESSION['csrf_token'])) { $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); } ?>
             <form action="layout/create-proses.php" method="POST">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
 
                 <!-- NOMOR + BARCODE -->
                 <div style="display:flex; gap:20px; margin-bottom:20px;">
@@ -52,19 +54,7 @@
                         <div style="position:relative;">
                             <i class="ri-hashtag text-primary" 
                                style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
-                            <input type="text" name="nomor_dokumen"
-                                   value="DOC-<?= strtoupper(substr(uniqid(), -8)); ?>"
-                                   style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
-                        </div>
-                    </div>
-
-                    <div style="flex:1;">
-                        <label class="fw-bold">Kode Barcode</label>
-                        <div style="position:relative;">
-                            <i class="ri-barcode-box-line text-primary" 
-                               style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
-                            <input type="text" name="kode_barcode"
-                                   value="BC-<?= strtoupper(substr(uniqid(), -8)); ?>"
+                            <input type="text" name="nomor_dokumen" placeholder="Masukkan nomor dokumen..."
                                    style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
                         </div>
                     </div>
@@ -81,7 +71,7 @@
                                placeholder="Masukkan judul dokumen..."
                                style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
                     </div>
-                </div>
+                </div>\
 
                 <!-- DESKRIPSI -->
                 <div style="margin-bottom:20px;">
@@ -138,11 +128,10 @@
                 ?>
 
                 <div style="display:flex; gap:20px; margin-bottom:20px;">
-
                     <div style="flex:1;">
-                        <label class="fw-bold">Pengirim</label>
+                        <label class="fw-bold">Divisi Pengirim</label>
                         <div style="position:relative;">
-                            <i class="ri-user-line text-primary" 
+                            <i class="ri-building-2-line text-primary" 
                                style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
                             <input type="text" 
                                    value="<?= $_SESSION['nama_lengkap']; ?>"
@@ -153,9 +142,9 @@
                     </div>
 
                     <div style="flex:1;">
-                        <label class="fw-bold">Penerima</label>
+                        <label class="fw-bold">Divisi Penerima</label>
                         <div style="position:relative;">
-                            <i class="ri-user-received-line text-primary"
+                            <i class="ri-building-2-line text-primary"
                                style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
                             <select name="penerima"
                                     style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
@@ -168,16 +157,39 @@
                             </select>
                         </div>
                     </div>
+                </div>
 
+                <div style="display:flex; gap:20px; margin-bottom:20px;">
+                    <div style="flex:1;">
+                        <label class="fw-bold">Nama Pengirim</label>
+                        <div style="position:relative;">
+                            <i class="ri-user-line text-primary" 
+                               style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
+                            <input type="text" name="nama_pengirim"
+                               placeholder="Masukkan nama pengirim..."
+                               style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
+                        </div>
+                    </div>
+
+                    <div style="flex:1;">
+                        <label class="fw-bold">Nama Penerima</label>
+                        <div style="position:relative;">
+                            <i class="ri-user-received-line text-primary"
+                               style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
+                            <input type="text" name="nama_penerima"
+                               placeholder="Masukkan nama penerima..."
+                               style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- TANGGAL -->
                 <div style="margin-bottom:25px;">
-                    <label class="fw-bold">Tanggal Tenggat</label>
+                    <label class="fw-bold">Tanggal Kirim</label>
                     <div style="position:relative;">
                         <i class="ri-calendar-line text-primary"
                            style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
-                        <input type="date" name="tanggal_tenggat"
+                        <input type="date" name="tanggal_kirim"
                                style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
                     </div>
                 </div>

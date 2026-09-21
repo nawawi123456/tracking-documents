@@ -20,7 +20,7 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                 <input 
                     type="text" 
                     name="search" 
-                    placeholder="Cari dokumen, nomor, barcode..."
+                    placeholder="Cari dokumen, nomor..."
                     value="<?= htmlspecialchars($search) ?>"
                     class="form-control border-1"
                     style="padding:10px;"
@@ -120,7 +120,7 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                                     <h6 class="fw-semibold mb-1" style="line-height: 1.2;">
                                         <?= htmlspecialchars($home['judul']) ?>
                                     </h6>
-                                    <small class="text-muted"><?= htmlspecialchars($home['document_id']) ?></small>
+                                    <small class="text-muted"><?= htmlspecialchars($home['nomor_dokumen']) ?></small>
                                 </div>
                                 <div class="d-flex flex-column gap-1 text-end ms-2">
                                     <?php
@@ -156,19 +156,14 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                             <div class="d-flex justify-content-between text-muted small mt-2">
                                 <div class="d-flex align-items-center">
                                     <i class="ri-user-line me-1 fs-5 text-primary"></i>
-                                    <span><?= htmlspecialchars($home['nama_lengkap'] ?? $home['current_divisi_id']) ?></span>
-                                </div>
-
-                                <div class="d-flex align-items-center">
-                                    <i class="ri-map-pin-line me-1 fs-5 text-primary"></i>
-                                    <span><?= htmlspecialchars($home['nama_divisi'] ?? $home['current_divisi_id']) ?></span>
+                                    <span><?= htmlspecialchars($home['nama_lengkap'] ?? $home['div_penerima']) ?></span>
                                 </div>
 
                                 <div class="d-flex align-items-center">
                                     <i class="ri-calendar-line me-1 fs-5 text-danger"></i>
                                     <span>
-                                        <?= !empty($home['doc_updated_at']) 
-                                            ? date('d M Y', strtotime($home['doc_updated_at'])) 
+                                        <?= !empty($home['tanggal_kirim']) 
+                                            ? date('d M Y', strtotime($home['tanggal_kirim'])) 
                                             : 'Tidak ada tenggat' ?>
                                     </span>
                                 </div>
@@ -221,7 +216,6 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                                 <th>Jenis</th>
                                 <th>Prioritas</th>
                                 <th>Penerima</th>
-                                <th>Divisi</th>
                                 <th>Tanggal</th>
                                 <th class="text-center pe-4">Aksi</th>
                             </tr>
@@ -255,7 +249,7 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                                                 </div>
                                                 <div>
                                                     <h6 class="mb-0 fw-semibold"><?= htmlspecialchars($home['judul']) ?></h6>
-                                                    <small class="text-muted"><?= htmlspecialchars($home['document_id']) ?></small>
+                                                    <small class="text-muted"><?= htmlspecialchars($home['nomor_dokumen']) ?></small>
                                                 </div>
                                             </div>
                                         </td>
@@ -282,16 +276,10 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                                         </td>
                                         <td>
                                             <div class="d-flex align-items-center">
-                                                <i class="ri-map-pin-line me-2 text-primary"></i>
-                                                <span><?= htmlspecialchars($home['nama_divisi'] ?? '-') ?></span>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
                                                 <i class="ri-calendar-line me-2 text-danger"></i>
                                                 <span>
-                                                    <?= !empty($home['doc_updated_at']) 
-                                                        ? date('d M Y', strtotime($home['doc_updated_at'])) 
+                                                    <?= !empty($home['tanggal_kirim']) 
+                                                        ? date('d M Y', strtotime($home['tanggal_kirim'])) 
                                                         : '-' ?>
                                                 </span>
                                             </div>
@@ -331,10 +319,24 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
         </div>
     <?php endif; ?>
 
+
+
+<?php if (!empty($totalPages) && $totalPages > 1): ?>
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <?php for ($p = 1; $p <= $totalPages; $p++): ?>
+                <li class="page-item <?= ($p == ($page ?? 1)) ? 'active' : '' ?>">
+                    <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $p])) ?>"><?= $p ?></a>
+                </li>
+            <?php endfor; ?>
+        </ul>
+    </nav>
+<?php endif; ?>
+
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const filterSelects = document.querySelectorAll('select[name="status"], select[name="jenis"]');
     
     filterSelects.forEach(select => {

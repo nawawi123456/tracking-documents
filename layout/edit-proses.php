@@ -1,5 +1,11 @@
 <?php
 include 'config.php';
+session_start();
+
+// CSRF check
+if (empty($_POST['csrf_token']) || empty($_SESSION['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+    die('Token CSRF tidak valid.');
+}
 
 if (!isset($_POST['document_id'])) {
     die("Akses ditolak.");
@@ -7,39 +13,41 @@ if (!isset($_POST['document_id'])) {
 
 $document_id = mysqli_real_escape_string($conn, $_POST['document_id']);
 
-$cek = mysqli_query($conn, "SELECT * FROM documents WHERE document_id = '$document_id'");
-if (mysqli_num_rows($cek) == 0) {
+$cek = $conn->prepare("SELECT document_id FROM documents WHERE document_id = ?");
+$cek->bind_param('s', $document_id);
+$cek->execute();
+$cekRes = $cek->get_result();
+if ($cekRes->num_rows == 0) {
     die("Dokumen tidak ditemukan.");
 }
 
-$nomor_dokumen   = mysqli_real_escape_string($conn, $_POST['nomor_dokumen']);
-$kode_barcode    = mysqli_real_escape_string($conn, $_POST['kode_barcode']);
-$judul           = mysqli_real_escape_string($conn, $_POST['judul']);
-$deskripsi       = mysqli_real_escape_string($conn, $_POST['deskripsi']);
-$jenis_dokumen   = mysqli_real_escape_string($conn, $_POST['jenis_dokumen']);
-$prioritas       = mysqli_real_escape_string($conn, $_POST['prioritas']);
-// $pengirim        = mysqli_real_escape_string($conn, $_POST['pengirim']);
-// $penerima        = mysqli_real_escape_string($conn, $_POST['penerima']);
-// $lokasi          = mysqli_real_escape_string($conn, $_POST['lokasi']);
-$tanggal_tenggat = mysqli_real_escape_string($conn, $_POST['tanggal_tenggat']);
+$nomor_dokumen   = isset($_POST['nomor_dokumen']) ? trim($_POST['nomor_dokumen']) : '';
+$judul           = isset($_POST['judul']) ? trim($_POST['judul']) : '';
+$deskripsi       = isset($_POST['deskripsi']) ? trim($_POST['deskripsi']) : '';
+$jenis_dokumen   = isset($_POST['jenis_dokumen']) ? trim($_POST['jenis_dokumen']) : '';
+$prioritas       = isset($_POST['prioritas']) ? trim($_POST['prioritas']) : '';
+$tanggalkirim    = isset($_POST['tanggal_kirim']) ? trim($_POST['tanggal_kirim']) : null;
 
-$query = "
-    UPDATE documents SET
-        nomor_dokumen     = '$nomor_dokumen',
-        kode_barcode      = '$kode_barcode',
-        judul             = '$judul',
-        deskripsi         = '$deskripsi',
-        jenis_dokumen     = '$jenis_dokumen',
-        prioritas         = '$prioritas',
-        tanggal_tenggat   = '$tanggal_tenggat',
-        update_doc        = NOW()
-    WHERE document_id = '$document_id'
-";
+$updateStmt = $conn->prepare("UPDATE documents SET
+        nomor_dokumen = ?,
+        judul = ?,
+        deskripsi = ?,
+        jenis_dokumen = ?,
+        prioritas = ?,
+        tanggal_kirim = ?,
+        update_doc = NOW()
+    WHERE document_id = ?");
 
-if (mysqli_query($conn, $query)) {
-    header("Location: ../?view=document-detail&id=" . $document_id);
+if (!$updateStmt) {
+    die('Prepare failed: ' . $conn->error);
+}
+
+$updateStmt->bind_param('sssssss', $nomor_dokumen, $judul, $deskripsi, $jenis_dokumen, $prioritas, $tanggalkirim, $document_id);
+if ($updateStmt->execute()) {
+    header("Location: ../?view=document-detail&id=" . urlencode($document_id));
     exit;
 } else {
-    echo "Gagal mengupdate dokumen: " . mysqli_error($conn);
+    echo "Gagal mengupdate dokumen: " . $updateStmt->error;
 }
+
 ?>
