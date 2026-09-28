@@ -2,29 +2,14 @@
 
     <div style="max-width:700px; margin:0 auto;">
 
-        <a href="?view=document-detail&id=<?= $doc['document_id'] ?>" 
-           class="d-inline-flex align-items-center" 
-           style="text-decoration:none; color:#555; font-size:15px; margin-bottom:15px;">
+        <a href="?view=document-detail&id=<?= $doc['document_id'] ?>" class="docflow-back-link">
             <i class="ri-arrow-left-line" style="font-size:18px; margin-right:6px;"></i>
             Kembali ke Dokumen
         </a>
 
         <!-- HEADER -->
-        <div style="
-            background: linear-gradient(135deg, #6f42ff, #9b4dff);
-            padding:25px;
-            border-radius:12px 12px 0 0;
-            color:white;
-            display:flex;
-            align-items:center;
-            gap:15px;
-        ">
-            <div style="
-                width:60px; height:60px;
-                background:rgba(255,255,255,0.2);
-                border-radius:10px;
-                display:flex; align-items:center; justify-content:center;
-            ">
+        <div class="docflow-form-header">
+            <div class="docflow-form-header-icon">
                 <i class="ri-edit-box-line" style="font-size:40px;"></i>
             </div>
 
@@ -35,12 +20,7 @@
         </div>
 
         <!-- FORM -->
-        <div style="
-            background:white;
-            padding:30px;
-            border-radius:0 0 12px 12px;
-            box-shadow:0 4px 12px rgba(0,0,0,0.08);
-        ">
+        <div class="docflow-form-card">
 
             <?php if (empty($_SESSION['csrf_token'])) { $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); } ?>
             <form action="layout/edit-proses.php" method="POST">
@@ -53,12 +33,11 @@
 
                     <div style="flex:1;">
                         <label class="fw-bold">Nomor Dokumen</label>
-                        <div style="position:relative;">
-                            <i class="ri-hashtag text-primary"
-                               style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
+                        <div class="docflow-field-wrap">
+                            <i class="ri-hashtag docflow-field-icon"></i>
                             <input type="text" name="nomor_dokumen"
                                    value="<?= $doc['nomor_documen'] ?>"
-                                   style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
+                                   class="docflow-field-input">
                         </div>
                     </div>
 
@@ -67,23 +46,21 @@
                 <!-- JUDUL -->
                 <div style="margin-bottom:20px;">
                     <label class="fw-bold">Judul Dokumen</label>
-                    <div style="position:relative;">
-                        <i class="ri-file-text-line text-primary"
-                           style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
+                    <div class="docflow-field-wrap">
+                        <i class="ri-file-text-line docflow-field-icon"></i>
                         <input type="text" name="judul"
                                value="<?= $doc['judul'] ?>"
-                               style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
+                               class="docflow-field-input">
                     </div>
                 </div>
 
                 <!-- DESKRIPSI -->
                 <div style="margin-bottom:20px;">
                     <label class="fw-bold">Deskripsi</label>
-                    <div style="position:relative;">
-                        <i class="ri-align-left text-primary"
-                           style="position:absolute; left:10px; top:12px; color:#777;"></i>
+                    <div class="docflow-field-wrap">
+                        <i class="ri-align-left docflow-field-icon--top"></i>
                         <textarea name="deskripsi" rows="4"
-                                  style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;"><?= $doc['deskripsi'] ?></textarea>
+                                  class="docflow-field-input"><?= $doc['deskripsi'] ?></textarea>
                     </div>
                 </div>
 
@@ -92,11 +69,9 @@
 
                     <div style="flex:1;">
                         <label class="fw-bold">Jenis Dokumen</label>
-                        <div style="position:relative;">
-                            <i class="ri-folder-open-line text-primary"
-                               style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
-                            <select name="jenis_dokumen"
-                                    style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
+                        <div class="docflow-field-wrap">
+                            <i class="ri-folder-open-line docflow-field-icon"></i>
+                            <select name="jenis_dokumen" class="docflow-field-input">
                                 <?php
                                     $jenis = ["Surat Masuk","Surat Keluar","Memo","SPP","Proposal","Laporan","Lainnya"];
                                     foreach ($jenis as $j) {
@@ -110,11 +85,9 @@
 
                     <div style="flex:1;">
                         <label class="fw-bold">Prioritas</label>
-                        <div style="position:relative;">
-                            <i class="ri-flag-line text-primary"
-                               style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
-                            <select name="prioritas"
-                                    style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
+                        <div class="docflow-field-wrap">
+                            <i class="ri-flag-line docflow-field-icon"></i>
+                            <select name="prioritas" class="docflow-field-input">
                                 <?php
                                     $prio = ["Rendah","Sedang","Tinggi","Urgent"];
                                     foreach ($prio as $p) {
@@ -131,42 +104,22 @@
                 <!-- TANGGAL -->
                 <div style="margin-bottom:25px;">
                     <label class="fw-bold">Tanggal Kirim</label>
-                    <div style="position:relative;">
-                        <i class="ri-calendar-line text-primary"
-                           style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#777;"></i>
+                    <div class="docflow-field-wrap">
+                        <i class="ri-calendar-line docflow-field-icon"></i>
                         <input type="date" name="tanggal_kirim"
                                value="<?= date('Y-m-d', strtotime($doc['tanggal_kirim'])) ?>"
-                               style="width:100%; padding:10px 10px 10px 35px; border-radius:6px; border:1px solid #ddd;">
+                               class="docflow-field-input">
                     </div>
                 </div>
 
                 <!-- BUTTON -->
                 <div style="display:flex; justify-content:space-between;">
 
-                    <a href="?view=document-detail&id=<?= $doc['document_id'] ?>"
-                       style="
-                           padding:10px 20px;
-                           border:1px solid #6f42ff;
-                           color:#6f42ff;
-                           text-decoration:none;
-                           border-radius:6px;
-                           font-weight:500;
-                       ">
+                    <a href="?view=document-detail&id=<?= $doc['document_id'] ?>" class="docflow-btn-outline">
                         Batal
                     </a>
 
-                    <button type="submit"
-                            style="
-                                padding:10px 24px;
-                                background:linear-gradient(135deg,#6f42ff,#9b4dff);
-                                color:white;
-                                border:none;
-                                border-radius:6px;
-                                font-weight:500;
-                                display:flex;
-                                align-items:center;
-                                gap:6px;
-                            ">
+                    <button type="submit" class="docflow-btn-submit">
                         <i class="ri-save-3-line"></i> Simpan Perubahan
                     </button>
 

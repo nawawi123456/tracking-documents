@@ -1,4 +1,4 @@
-<div class="bg-gradient-primary py-4 mb-4 sticky-top" style="background: linear-gradient(135deg, #6f42ff, #9b4dff);">
+<div class="bg-gradient-primary py-4 mb-4 sticky-top" style="background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6">
@@ -16,6 +16,9 @@
                 </div>
             </div>
             <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                <button class="btn btn-outline-light me-2" id="theme-toggle" type="button">
+                    <i class="ri-moon-line me-1"></i> Dark Mode
+                </button>
                 <div class="dropdown d-inline-block">
                     <button class="btn btn-outline-light" 
                             type="button" 

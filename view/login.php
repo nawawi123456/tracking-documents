@@ -1,8 +1,8 @@
 <div class="login-card d-flex flex-column align-items-center justify-content-center" 
-     style="max-width: 380px; margin: 50px auto; padding: 35px 30px; border: 1px solid #e5e5e5; border-radius: 12px; background:#fff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+     style="max-width: 380px; margin: 50px auto; padding: 35px 30px; border: 1px solid var(--theme-border); border-radius: 12px; background:var(--theme-card); box-shadow: 0 4px 12px var(--theme-shadow);">
 
     <div class="logo text-center mb-3">
-        <div style="font-size: 60px; color:#0d6efd;">
+        <div style="font-size: 60px; color:var(--theme-primary);">
             <i class="ri-mac-fill"></i>
         </div>
         <h3 style="margin-bottom:5px;">ASN DocuFlow</h3>
@@ -50,7 +50,6 @@
     <div class="text-center mt-3">
         <p class="text-muted" style="font-size:12px; margin:0;">Sistem Manajemen Dokumen Terintegrasi</p>
     </div>
-    <?php //echo password_hash("123456", PASSWORD_DEFAULT); ?>
 </div>
 
 <!-- Bootstrap JS -->

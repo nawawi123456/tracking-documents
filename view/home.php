@@ -109,7 +109,7 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                             <div class="d-flex align-items-center mb-3">
                                 <!-- ICON FILE -->
                                 <div class="flex-shrink-0">
-                                    <div class="avatar-title rounded-4" style="width: 70px; height: 70px; background: linear-gradient(135deg, #6f42ff, #9b4dff);">
+                                    <div class="avatar-title rounded-4 doc-icon-box-lg">
                                         <div class="document-icon">
                                             <i class="ri-survey-fill" style="font-size: 40px;"></i>
                                         </div>
@@ -209,7 +209,7 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
             <div class="card-body p-0">
                 <div class="table-responsive">
                     <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light">
+                        <thead class="table">
                             <tr>
                                 <th class="ps-4">Dokumen</th>
                                 <th>Status</th>
@@ -243,7 +243,7 @@ $view_mode = isset($_GET['view_mode']) ? $_GET['view_mode'] : 'card';
                                         <td class="ps-4">
                                             <div class="d-flex align-items-center">
                                                 <div class="avatar-sm flex-shrink-0 me-3">
-                                                    <div class="avatar-title rounded" style="background: linear-gradient(135deg, #6f42ff, #9b4dff);">
+                                                    <div class="avatar-title rounded doc-icon-box-sm">
                                                         <i class="ri-survey-fill fs-5"></i>
                                                     </div>
                                                 </div>

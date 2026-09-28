@@ -1,5 +1,251 @@
 /* Custom styles untuk ASN DocuFlow */
 
+:root {
+    --theme-primary: #6f42ff;
+    --theme-secondary: #9b4dff;
+    --theme-accent: #f59e0b;
+    --theme-bg: #f8f9fb;
+    --theme-surface: #ffffff;
+    --theme-card: #ffffff;
+    --theme-text: #1f2937;
+    --theme-text-soft: #6c757d;
+    --theme-border: #e9ecef;
+    --theme-input: #f8f9fa;
+    --theme-shadow: rgba(0, 0, 0, 0.08);
+    /* dipakai khusus form document-create, biar tampilan lama tidak berubah */
+    --theme-field-bg: #ffffff;
+    --theme-muted-strong: #555555;
+    --theme-muted-icon: #777777;
+    /* aksen "soft" lavender dipakai modal Edit Catatan, dll */
+    --theme-soft-bg: #f7f5ff;
+    --theme-soft-border: #e5dfff;
+    --theme-soft-input-border: #d3c9ff;
+    /* warna khusus judul (h1-h6, .card-title), dipisah dari teks biasa
+       supaya bisa dibuat lebih terang/kontras di dark mode */
+    --theme-heading: #1f2937;
+}
+
+body[data-theme="dark"] {
+    --theme-primary: #8b5cf6;
+    --theme-secondary: #a78bfa;
+    --theme-accent: #fbbf24;
+    --theme-bg: #0a0e17;
+    --theme-surface: #131826;
+    --theme-card: #161c2b;
+    --theme-text: #e5e7eb;
+    --theme-text-soft: #9ca3af;
+    --theme-border: #262d40;
+    --theme-input: #1a2032;
+    --theme-shadow: rgba(0, 0, 0, 0.45);
+    --theme-field-bg: #1a2032;
+    --theme-muted-strong: #9ca3af;
+    --theme-muted-icon: #9ca3af;
+    --theme-soft-bg: rgba(139, 92, 246, 0.12);
+    --theme-soft-border: rgba(139, 92, 246, 0.3);
+    --theme-soft-input-border: rgba(139, 92, 246, 0.35);
+    --theme-heading: #f8fafc;
+}
+
+body {
+    background: var(--theme-bg);
+    color: var(--theme-text);
+}
+
+body[data-theme="dark"] .search-container,
+body[data-theme="dark"] .card-custom,
+body[data-theme="dark"] .card-document,
+body[data-theme="dark"] .info-box,
+body[data-theme="dark"] .search-input,
+body[data-theme="dark"] .filter-dropdown,
+body[data-theme="dark"] .form-control,
+body[data-theme="dark"] .form-select,
+body[data-theme="dark"] .table,
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .modal-content {
+    background-color: var(--theme-card) !important;
+    color: var(--theme-text) !important;
+    border-color: var(--theme-border) !important;
+}
+
+body[data-theme="dark"] .search-input,
+body[data-theme="dark"] .filter-dropdown,
+body[data-theme="dark"] .form-control,
+body[data-theme="dark"] .form-select {
+    background-color: var(--theme-input) !important;
+    color: var(--theme-text) !important;
+}
+
+body[data-theme="dark"] .text-muted,
+body[data-theme="dark"] .info-badge,
+body[data-theme="dark"] .filter-label,
+body[data-theme="dark"] small,
+body[data-theme="dark"] .text-secondary,
+body[data-theme="dark"] .text-black-50 {
+    color: var(--theme-text-soft) !important;
+}
+
+body[data-theme="dark"] .info-box small,
+body[data-theme="dark"] .info-box strong,
+body[data-theme="dark"] .page-title-box,
+body[data-theme="dark"] .card-custom .card-header,
+body[data-theme="dark"] .card-document,
+body[data-theme="dark"] .timeline-item {
+    border-color: var(--theme-border) !important;
+}
+
+body[data-theme="dark"] .info-box strong {
+    color: var(--theme-text) !important;
+}
+
+body[data-theme="dark"] .info-box:hover {
+    border-color: var(--theme-primary) !important;
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.25) !important;
+}
+
+body[data-theme="dark"] .timeline-dot {
+    background: var(--theme-primary);
+    border-color: var(--theme-card);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+}
+
+body[data-theme="dark"] .card-document:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ============================================================
+   FIX: badge status Bootstrap "-subtle" yang dipakai di
+   document-list.php (bg-primary-subtle, bg-success-subtle, dst)
+   ============================================================ */
+body[data-theme="dark"] .badge.bg-primary-subtle   { background-color: rgba(139, 92, 246, 0.18) !important; color: #c4b5fd !important; }
+body[data-theme="dark"] .badge.bg-success-subtle   { background-color: rgba(74, 222, 128, 0.18) !important; color: #86efac !important; }
+body[data-theme="dark"] .badge.bg-danger-subtle    { background-color: rgba(248, 113, 113, 0.18) !important; color: #fca5a5 !important; }
+body[data-theme="dark"] .badge.bg-warning-subtle   { background-color: rgba(251, 191, 36, 0.18) !important; color: #fcd34d !important; }
+body[data-theme="dark"] .badge.bg-secondary-subtle { background-color: rgba(156, 163, 175, 0.18) !important; color: #d1d5db !important; }
+body[data-theme="dark"] .badge.bg-dark-subtle      { background-color: rgba(229, 231, 235, 0.12) !important; color: #e5e7eb !important; }
+body[data-theme="dark"] .badge-border { border: 1px solid currentColor; }
+
+/* status badge lama (kalau masih dipakai di tempat lain) */
+body[data-theme="dark"] .badge-status-draft { background-color: rgba(96, 165, 250, 0.15); color: #93c5fd; }
+body[data-theme="dark"] .badge-status-pending { background-color: rgba(251, 191, 36, 0.15); color: #fcd34d; }
+body[data-theme="dark"] .badge-status-approved { background-color: rgba(74, 222, 128, 0.15); color: #86efac; }
+body[data-theme="dark"] .badge-status-rejected { background-color: rgba(248, 113, 113, 0.15); color: #fca5a5; }
+body[data-theme="dark"] .badge-status-completed { background-color: rgba(56, 189, 248, 0.15); color: #7dd3fc; }
+
+body[data-theme="dark"] .badge-outline {
+    border-color: var(--theme-border);
+    color: var(--theme-text-soft);
+}
+
+/* ============================================================
+   FIX: thead.table-light & tabel Bootstrap secara umum
+   ============================================================ */
+body[data-theme="dark"] .table,
+body[data-theme="dark"] .table-light,
+body[data-theme="dark"] .table > :not(caption) > * > * {
+    --bs-table-bg: var(--theme-card);
+    --bs-table-color: var(--theme-text);
+    --bs-table-striped-bg: var(--theme-surface);
+    --bs-table-striped-color: var(--theme-text);
+    --bs-table-hover-bg: var(--theme-surface);
+    --bs-table-hover-color: var(--theme-text);
+    --bs-table-border-color: var(--theme-border);
+    color: var(--theme-text);
+    border-color: var(--theme-border);
+}
+
+/* ============================================================
+   FIX: kotak ikon input-group (bg-light) & outline button
+   ============================================================ */
+body[data-theme="dark"] .bg-light {
+    background-color: var(--theme-input) !important;
+}
+
+body[data-theme="dark"] .btn-outline-secondary {
+    color: var(--theme-text-soft);
+    border-color: var(--theme-border);
+}
+
+body[data-theme="dark"] .btn-outline-secondary:hover {
+    background-color: var(--theme-input);
+    color: var(--theme-text);
+}
+
+/* ============================================================
+   FIX: ".text-dark" & ".bg-white" — dipakai di document-detail.php
+   (strong.text-dark di info box, card-header.bg-white) dan akan
+   diam-diam tetap gelap/putih kalau tidak dioverride
+   ============================================================ */
+body[data-theme="dark"] .text-dark {
+    color: var(--theme-text) !important;
+}
+
+body[data-theme="dark"] .bg-white {
+    background-color: var(--theme-card) !important;
+}
+
+/* ============================================================
+   FIX: judul (h1-h6, .card-title) ikut warna teks biasa yang
+   lembut (var(--theme-text)) karena diwariskan dari .card/.card-
+   document — dibuat lebih terang/kontras khusus untuk judul.
+   .text-white tetap menang (class lebih spesifik dari tag h1-h6)
+   jadi judul putih di atas gradient tidak ikut berubah.
+   ============================================================ */
+body[data-theme="dark"] h1,
+body[data-theme="dark"] h2,
+body[data-theme="dark"] h3,
+body[data-theme="dark"] h4,
+body[data-theme="dark"] h5,
+body[data-theme="dark"] h6,
+body[data-theme="dark"] .card-title {
+    color: var(--theme-heading) !important;
+}
+
+/* ============================================================
+   FIX: alert Bootstrap (success/danger) di profile.php supaya
+   senada dengan badge, bukan kotak terang menyala di tengah UI gelap
+   ============================================================ */
+body[data-theme="dark"] .alert-success {
+    background-color: rgba(74, 222, 128, 0.15);
+    color: #86efac;
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+body[data-theme="dark"] .alert-danger {
+    background-color: rgba(248, 113, 113, 0.15);
+    color: #fca5a5;
+    border-color: rgba(248, 113, 113, 0.3);
+}
+
+/* ============================================================
+   FIX: panah dropdown bawaan Bootstrap (.form-select) yang
+   warnanya gelap dan nyaris tak kelihatan di atas input gelap
+   ============================================================ */
+body[data-theme="dark"] .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23e5e7eb' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+body[data-theme="dark"] input[type="date"] {
+    color-scheme: dark;
+}
+
+/* ============================================================
+   FIX: pagination
+   ============================================================ */
+body[data-theme="dark"] .page-link {
+    background-color: var(--theme-card);
+    border-color: var(--theme-border);
+    color: var(--theme-text);
+}
+body[data-theme="dark"] .page-item.active .page-link {
+    background-color: var(--theme-primary);
+    border-color: var(--theme-primary);
+    color: #fff;
+}
+body[data-theme="dark"] .page-item.disabled .page-link {
+    background-color: var(--theme-card);
+    color: var(--theme-text-soft);
+}
+
 /* Search and Filter Styles */
 .search-container {
     background: white;
@@ -27,6 +273,10 @@
     top: 50%;
     transform: translateY(-50%);
     color: #6c757d;
+}
+
+body[data-theme="dark"] .search-icon {
+    color: var(--theme-text-soft);
 }
 
 .filter-dropdown {
@@ -71,9 +321,22 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: linear-gradient(135deg, #6f42ff, #9b4dff);
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
     color: white;
     font-size: 24px;
+}
+
+/* Kotak ikon gradient dipakai di document-list.php, gantikan
+   inline style "background: linear-gradient(135deg,#6f42ff,#9b4dff)"
+   supaya ikut variabel tema (jadi tidak "mati" saat dark mode) */
+.doc-icon-box-lg {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+}
+
+.doc-icon-box-sm {
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
 }
 
 .badge-outline {
@@ -91,11 +354,15 @@
 }
 
 .document-header {
-    background: linear-gradient(135deg, #6f42ff, #9b4dff);
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
     color: white;
     border-radius: 12px;
     padding: 2rem;
     margin-bottom: 2rem;
+}
+
+body[data-theme="dark"] .document-header {
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.2);
 }
 
 .info-badge {
@@ -119,6 +386,10 @@
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
+body[data-theme="dark"] .card-custom {
+    box-shadow: 0 2px 10px var(--theme-shadow);
+}
+
 .card-custom .card-header {
     background: transparent;
     border-bottom: 1px solid #e9ecef;
@@ -131,6 +402,10 @@
     padding: 1.25rem;
     transition: all 0.2s;
     border: 1px solid transparent;
+}
+
+body[data-theme="dark"] .info-box {
+    background: var(--theme-input) !important;
 }
 
 .info-box:hover {
@@ -152,7 +427,7 @@
     position: relative;
     padding-left: 30px;
     padding-bottom: 20px;
-    border-left: 2px solid #6f42ff;
+    border-left: 2px solid var(--theme-primary);
 }
 
 .timeline-item:last-child {
@@ -171,12 +446,133 @@
     box-shadow: 0 0 0 3px rgba(111, 66, 255, 0.2);
 }
 
-/* Status Badge Colors */
+/* Status Badge Colors (light mode, kelas custom lama) */
 .badge-status-draft { background-color: #e3f2fd; color: #1976d2; }
 .badge-status-pending { background-color: #fff3e0; color: #f57c00; }
 .badge-status-approved { background-color: #e8f5e9; color: #388e3c; }
 .badge-status-rejected { background-color: #ffebee; color: #d32f2f; }
 .badge-status-completed { background-color: #e3f2fd; color: #0288d1; }
+
+/* ============================================================
+   Halaman document-create.php — sebelumnya semua inline style
+   (background:white hardcode, border:#ddd, color:#777/#555),
+   sehingga di dark mode kartu form TETAP PUTIH tapi teksnya ikut
+   warna body yang terang => teks jadi nyaris tak terbaca.
+   Diganti pakai class berikut supaya ikut variabel tema.
+   ============================================================ */
+.docflow-back-link {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--theme-muted-strong);
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.docflow-form-header {
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+    padding: 25px;
+    border-radius: 12px 12px 0 0;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.docflow-form-header-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.docflow-form-card {
+    background: var(--theme-card);
+    color: var(--theme-text);
+    padding: 30px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 12px var(--theme-shadow);
+}
+
+.docflow-field-wrap {
+    position: relative;
+}
+
+.docflow-field-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--theme-primary);
+}
+
+.docflow-field-icon--top {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: var(--theme-primary);
+}
+
+.docflow-field-input {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border-radius: 6px;
+    border: 1px solid var(--theme-border);
+    background: var(--theme-field-bg);
+    color: var(--theme-text);
+}
+
+.docflow-field-input::placeholder {
+    color: var(--theme-muted-icon);
+    opacity: 1;
+}
+
+.docflow-field-input:focus {
+    outline: none;
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+.docflow-field-input[readonly] {
+    background: var(--theme-input);
+    cursor: not-allowed;
+}
+
+.docflow-btn-outline {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 1px solid var(--theme-primary);
+    color: var(--theme-primary);
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.docflow-btn-outline:hover {
+    background: var(--theme-primary);
+    color: #ffffff;
+}
+
+.docflow-btn-submit {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary));
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.docflow-btn-submit:hover {
+    filter: brightness(1.05);
+    color: #ffffff;
+}
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

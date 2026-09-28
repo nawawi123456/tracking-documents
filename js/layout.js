@@ -48,3 +48,42 @@ File: Layout Js File
     }
 
 })();
+
+(function () {
+    'use strict';
+
+    function applyTheme(themeName) {
+        const root = document.body;
+        const toggleButton = document.getElementById('theme-toggle');
+        const gradientElements = document.querySelectorAll('.bg-gradient-primary');
+
+        root.setAttribute('data-theme', themeName);
+        localStorage.setItem('docuflow-theme', themeName);
+
+        gradientElements.forEach(function (element) {
+            const gradient = themeName === 'dark'
+                ? 'linear-gradient(135deg, #111827, #1f2937)'
+                : 'linear-gradient(135deg, #6f42ff, #9b4dff)';
+            element.style.background = gradient;
+        });
+
+        if (toggleButton) {
+            if (themeName === 'dark') {
+                toggleButton.innerHTML = '<i class="ri-sun-line me-1"></i> Light Mode';
+            } else {
+                toggleButton.innerHTML = '<i class="ri-moon-line me-1"></i> Dark Mode';
+            }
+        }
+    }
+
+    const savedTheme = localStorage.getItem('docuflow-theme') || 'purple-blue';
+    applyTheme(savedTheme);
+
+    const toggleButton = document.getElementById('theme-toggle');
+    if (toggleButton) {
+        toggleButton.addEventListener('click', function () {
+            const currentTheme = document.body.getAttribute('data-theme') === 'dark' ? 'purple-blue' : 'dark';
+            applyTheme(currentTheme);
+        });
+    }
+})();

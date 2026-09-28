@@ -2,8 +2,10 @@
 
 <style>
     :root {
-        --primary-color: #6f42ff;
-        --secondary-color: #9b4dff;
+        /* disambungkan ke variabel tema global (custom-theme.css) supaya
+           ikut berubah otomatis saat dark mode aktif */
+        --primary-color: var(--theme-primary);
+        --secondary-color: var(--theme-secondary);
     }
     
     .bg-gradient-primary {
@@ -22,9 +24,11 @@
     }
     
     .profile-card {
+        background: var(--theme-card);
+        color: var(--theme-text);
         border: none;
         border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 20px var(--theme-shadow);
         overflow: hidden;
     }
     
@@ -38,7 +42,7 @@
     .profile-avatar {
         width: 120px;
         height: 120px;
-        background: white;
+        background: var(--theme-surface);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -54,12 +58,12 @@
     
     .info-item {
         padding: 1rem;
-        border-bottom: 1px solid #f0f0f0;
+        border-bottom: 1px solid var(--theme-border);
         transition: background 0.3s;
     }
     
     .info-item:hover {
-        background: #f8f9fa;
+        background: var(--theme-input);
     }
     
     .info-item:last-child {
@@ -68,13 +72,13 @@
     
     .info-label {
         font-weight: 600;
-        color: #6c757d;
+        color: var(--theme-text-soft);
         font-size: 0.875rem;
         margin-bottom: 0.25rem;
     }
     
     .info-value {
-        color: #212529;
+        color: var(--theme-text);
         font-size: 1rem;
     }
     

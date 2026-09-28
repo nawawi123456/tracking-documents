@@ -19,14 +19,14 @@
 </div>
 
 <div class="position-relative mt-3" style="overflow: hidden;">
-    <div style="height: 300px; background: linear-gradient(135deg, #6f42ff, #9b4dff); border-radius: 0 0 20px 20px; margin-left: -1.5rem; margin-right: -1.5rem;"></div>
+    <div style="height: 300px; background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)); border-radius: 0 0 20px 20px; margin-left: -1.5rem; margin-right: -1.5rem;"></div>
 </div>
 
 <div style="margin-top: -300px; position: relative; z-index: 100;" class="px-3">
     <div class="container-fluid">
         <div class="row g-4 align-items-end">
             <div class="col-auto">
-                <div style="width: 110px; height: 110px; background: linear-gradient(135deg, #6f42ff, #9b4dff); border: 4px solid white; box-shadow: 0 4px 12px rgba(111, 66, 255, 0.3);" class="rounded-4 d-flex align-items-center justify-content-center">
+                <div style="width: 110px; height: 110px; background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)); border: 4px solid var(--theme-surface); box-shadow: 0 4px 12px rgba(111, 66, 255, 0.3);" class="rounded-4 d-flex align-items-center justify-content-center">
                     <i class="ri-survey-fill" style="font-size: 60px; color: #fff;"></i>
                 </div>
             </div>
@@ -82,17 +82,53 @@
                 <?= ucfirst($doc['prioritas']) ?>
             </span>
         </div>
+
         
-        <?php if ($creator): ?>
         <div class="d-flex gap-2">
-            <a href="?view=document-edit&id=<?= $doc['document_id'] ?>" class="btn btn-secondary btn-sm">
-                <i class="ri-ball-pen-line me-1"></i> Edit Dokumen
-            </a><?php if ($accesdelete): ?>
-            <a href="layout/delete-proses.php?id=<?= $doc['document_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus dokumen ini?')">
-                <i class="ri-delete-bin-line me-1"></i> Hapus
-            </a><?php endif; ?>
-        </div>
+        <?php if (!empty($doc['file_key'])): ?>
+            <a
+                href="layout/download-document.php?id=<?= urlencode($doc['document_id']) ?>"
+                class="btn btn-primary btn-sm"
+            >
+                <i class="ri-download-2-line me-1"></i>
+                Download File
+            </a>
         <?php endif; ?>
+        <?php if ($creator || $bolehAkses): ?>
+            <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                data-bs-toggle="modal"
+                data-bs-target="#modalUploadDocument"
+            >
+                <i class="ri-upload-2-line me-1"></i>
+                Upload File
+            </button>
+        <?php endif; ?>
+        <?php if ($creator): ?>
+            <a
+                href="?view=document-edit&id=<?= $doc['document_id'] ?>"
+                class="btn btn-secondary btn-sm"
+            >
+                <i class="ri-ball-pen-line me-1"></i>
+                Edit Dokumen
+            </a>
+
+            <?php if ($accesdelete): ?>
+
+            <a
+                href="layout/delete-proses.php?id=<?= $doc['document_id'] ?>"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('Yakin ingin menghapus dokumen ini?')"
+            >
+                <i class="ri-delete-bin-line me-1"></i>
+                Hapus
+            </a>
+
+            <?php endif; ?>
+
+        <?php endif; ?>
+        </div>
     </div>
 
     <!-- Content Grid -->
@@ -115,40 +151,40 @@
                         <h5 class="card-title mb-3">Informasi Detail</h5>
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <div class="p-3 rounded" style="background-color: #f8f9fa;">
+                                <div class="p-3 rounded info-box">
                                     <small class="text-muted d-block mb-1">Pengirim</small>
                                     <strong class="text-dark d-flex align-items-center">
-                                        <i class="ri-user-line me-2" style="color: #6f42ff;"></i>
+                                        <i class="ri-user-line me-2" style="color: var(--theme-primary);"></i>
                                         <?= htmlspecialchars($doc['sender']) ?>
                                     </strong>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="p-3 rounded" style="background-color: #f8f9fa;">
+                                <div class="p-3 rounded info-box">
                                     <small class="text-muted d-block mb-1">Penerima</small>
                                     <strong class="text-dark d-flex align-items-center">
-                                        <i class="ri-user-received-line me-2" style="color: #6f42ff;"></i>
+                                        <i class="ri-user-received-line me-2" style="color: var(--theme-primary);"></i>
                                         <?= !empty($doc['div_penerima']) ? htmlspecialchars($doc['receive']) : 'Belum ada penerima' ?>
                                     </strong>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="p-3 rounded" style="background-color: #f8f9fa;">
+                                <div class="p-3 rounded info-box">
                                     <small class="text-muted d-block mb-1">Lokasi Saat Ini</small>
                                     <strong class="text-dark d-flex align-items-center">
-                                        <i class="ri-map-pin-user-line me-2" style="color: #6f42ff;"></i>
+                                        <i class="ri-map-pin-user-line me-2" style="color: var(--theme-primary);"></i>
                                         <?= htmlspecialchars($doc['nama_penerima']) ?>
                                     </strong>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
-                                <div class="p-3 rounded" style="background-color: #f8f9fa;">
+                                <div class="p-3 rounded info-box">
                                     <small class="text-muted d-block mb-1">Tanggal</small>
                                     <strong class="text-dark d-flex align-items-center">
-                                        <i class="ri-calendar-2-line me-2" style="color: #6f42ff;"></i>
+                                        <i class="ri-calendar-2-line me-2" style="color: var(--theme-primary);"></i>
                                         <?= !empty($doc['tanggal_kirim']) ? date('d F Y', strtotime($doc['tanggal_kirim'])) : 'Tidak ada tanggal' ?>
                                     </strong>
                                 </div>
@@ -186,7 +222,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h5 class="card-title mb-0">History Document</h5>
                         <?php if ($bolehAkses): ?>
-                            <button class="btn btn-sm" style="background-color: #6f42ff; color: white; border: none;" 
+                            <button class="btn btn-sm" style="background-color: var(--theme-primary); color: white; border: none;" 
                                     onclick="openAddFlowModal('<?= $doc['document_id'] ?>')">
                                 <i class="ri-add-line"></i>
                             </button>
@@ -222,7 +258,7 @@
 
                     <?php if (empty($flows)): ?>
                         <div class="text-center py-4">
-                            <i class="ri-file-list-3-line" style="font-size: 48px; color: #e9ecef;"></i>
+                            <i class="ri-file-list-3-line" style="font-size: 48px; color: var(--theme-border);"></i>
                             <p class="text-muted mt-2 mb-0">Belum ada riwayat perjalanan</p>
                         </div>
                     <?php else: ?>
@@ -241,8 +277,8 @@
                                         $text_color = '#28a745';
                                     } elseif ($index == $total_flows - 1) {
                                         $icon = 'ri-check-double-line';
-                                        $bg_color = 'rgba(111, 66, 255, 0.1)';
-                                        $text_color = '#6f42ff';
+                                        $bg_color = 'rgba(139, 92, 246, 0.12)';
+                                        $text_color = 'var(--theme-primary)';
                                     }
                                     ?>
                                     <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background-color: <?= $bg_color ?>; color: <?= $text_color ?>;">
@@ -297,7 +333,7 @@
                                 </div>
                             </div>
                             <?php if ($index < $total_flows - 1): ?>
-                            <div style="position: absolute; left: 15px; top: 35px; bottom: -12px; width: 2px; background-color: #e9ecef;"></div>
+                            <div style="position: absolute; left: 15px; top: 35px; bottom: -12px; width: 2px; background-color: var(--theme-border);"></div>
                             <?php endif; ?>
                         </div>
                         <?php endforeach; ?>
@@ -312,8 +348,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content shadow-lg">
 
-            <div class="modal-header" style="background:#f7f5ff; border-bottom:1px solid #e5dfff;">
-                <h5 class="modal-title d-flex align-items-center" style="color:#6f42ff; font-weight:600;">
+            <div class="modal-header" style="background:var(--theme-soft-bg); border-bottom:1px solid var(--theme-soft-border);">
+                <h5 class="modal-title d-flex align-items-center" style="color:var(--theme-primary); font-weight:600;">
                     <i class="ri-edit-2-line me-2" style="font-size:20px;"></i>
                     Edit Catatan
                 </h5>
@@ -326,25 +362,25 @@
                 <div class="mb-3">
                     <div style="position:relative;">
                         <i class="ri-chat-3-line"
-                           style="position:absolute; left:12px; top:6px; font-size:18px; color:#6f42ff;"></i>
+                           style="position:absolute; left:12px; top:6px; font-size:18px; color:var(--theme-primary);"></i>
 
                         <textarea 
                             class="form-control"
                             id="edit-catatan"
                             rows="4"
                             placeholder="Tulis catatan tambahan..."
-                            style="padding-left:40px; border-radius:8px; border:1px solid #d3c9ff;"
+                            style="padding-left:40px; border-radius:8px; border:1px solid var(--theme-soft-input-border);"
                         ></textarea>
                     </div>
                 </div>
             </div>
 
-            <div class="modal-footer" style="border-top:1px solid #eee;">
+            <div class="modal-footer" style="border-top:1px solid var(--theme-border);">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">
                     <i class="ri-close-line me-1"></i> Batal
                 </button>
                 <button type="button" class="btn btn-primary" onclick="saveCatatan()"
-                        style="background-color:#6f42ff; border:none; box-shadow:0 2px 6px rgba(111,66,255,.4);">
+                        style="background-color:var(--theme-primary); border:none; box-shadow:0 2px 6px rgba(111,66,255,.4);">
                     <i class="ri-save-3-line me-1"></i> Simpan
                 </button>
             </div>
@@ -356,7 +392,7 @@
 <div class="modal fade" id="modalAddFlow" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
-            <div class="modal-header" style="background: linear-gradient(135deg, #6f42ff, #9b4dff); color: white; border: none;">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)); color: white; border: none;">
                 <div class="d-flex align-items-center gap-3">
                     <div style="width:50px; height:50px; background:rgba(255,255,255,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center;">
                         <i class="ri-add-circle-line" style="font-size:32px;"></i>
@@ -378,7 +414,7 @@
                     <div class="mb-3">
                         <label class="fw-bold">Aksi <span style="color:red;">*</span></label>
                         <div style="position:relative;">
-                            <i class="ri-flag-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#6f42ff;"></i>
+                            <i class="ri-flag-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--theme-primary);"></i>
                             <select name="aksi" id="add-aksi" required class="form-select" style="padding-left: 35px;">
                                 <option value="">Pilih Aksi</option>
                                 <option value="Dikirim">Dikirim</option>
@@ -394,17 +430,17 @@
                     <div class="mb-3">
                         <label class="fw-bold">Dari Divisi</label>
                         <div style="position:relative;">
-                            <i class="ri-user-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#6f42ff;"></i>
+                            <i class="ri-user-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--theme-primary);"></i>
                             <input type="text" class="form-control" 
                                    value="<?= htmlspecialchars($_SESSION['nama_lengkap'] ?? 'User') ?>" 
-                                   readonly style="padding-left: 35px; background-color:#f8f9fa;">
+                                   readonly style="padding-left: 35px; background-color:var(--theme-input);">
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="fw-bold">Ke Divisi <span style="color:red;">*</span></label>
                         <div style="position:relative;">
-                            <i class="ri-user-received-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#6f42ff;"></i>
+                            <i class="ri-user-received-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--theme-primary);"></i>
                             <select name="received_by" id="add-received-by" required class="form-select" style="padding-left: 35px;">
                                 <option value="">Pilih Divisi</option>
                                 <?php
@@ -421,7 +457,7 @@
                                 while ($d = $r->fetch_assoc()):
                                     if ($current_divisi != $d['divisi']) {
                                         if ($current_divisi != '') echo '</optgroup>';
-                                        echo '<optgroup label="' . htmlspecialchars($d['divisi']) . '" style="font-weight:600; color:#6f42ff;">';
+                                        echo '<optgroup label="' . htmlspecialchars($d['divisi']) . '" style="font-weight:600; color:var(--theme-primary);">';
                                         $current_divisi = $d['divisi'];
                                     }
                                 ?>
@@ -439,7 +475,7 @@
                     <div class="mb-3">
                         <label class="fw-bold">Tanggal</label>
                         <div style="position:relative;">
-                            <i class="ri-calendar-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#6f42ff;"></i>
+                            <i class="ri-calendar-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--theme-primary);"></i>
                             <input type="date" name="tanggal" id="add-tanggal" 
                                    value="<?= date('Y-m-d') ?>"
                                    class="form-control" style="padding-left: 35px;">
@@ -449,7 +485,7 @@
                     <div class="mb-3">
                         <label class="fw-bold">Catatan</label>
                         <div style="position:relative;">
-                            <i class="ri-chat-3-line" style="position:absolute; left:10px; top:12px; color:#6f42ff;"></i>
+                            <i class="ri-chat-3-line" style="position:absolute; left:10px; top:12px; color:var(--theme-primary);"></i>
                             <textarea name="catatan" id="add-catatan" rows="4" 
                                       placeholder="Tambahkan catatan (opsional)"
                                       class="form-control" style="padding-left: 35px;"></textarea>
@@ -459,7 +495,7 @@
                     <div class="mb-3">
                         <label class="fw-bold">Ditangani Oleh</label>
                         <div style="position:relative;">
-                            <i class="ri-user-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:#6f42ff;"></i>
+                            <i class="ri-user-line" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); color:var(--theme-primary);"></i>
                             <input type="text" name="nama_penerima" id="add-nama-penerima-input" 
                                    placeholder="Masukkan nama yang menangani..."
                                    class="form-control" style="padding-left: 35px;">
@@ -471,11 +507,256 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Batal</button>
                 <button type="button" class="btn btn-primary" id="btnSaveAddFlow"
-                        style="background: linear-gradient(135deg,#6f42ff,#9b4dff); border: none;">
+                        style="background: linear-gradient(135deg, var(--theme-primary), var(--theme-secondary)); border: none;">
                     <i class="ri-save-3-line me-1"></i> Simpan
                 </button>
             </div>
         </div>
+    </div>
+</div>
+
+<div
+    class="modal fade"
+    id="modalUploadDocument"
+    tabindex="-1"
+    aria-hidden="true"
+>
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div
+                class="modal-header"
+                style="
+                    background: linear-gradient(
+                        135deg,
+                        var(--theme-primary),
+                        var(--theme-secondary)
+                    );
+                    color: white;
+                    border: none;
+                "
+            >
+
+                <div class="d-flex align-items-center gap-3">
+
+                    <div
+                        style="
+                            width:50px;
+                            height:50px;
+                            background:rgba(255,255,255,0.2);
+                            border-radius:10px;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                        "
+                    >
+                        <i
+                            class="ri-upload-cloud-2-line"
+                            style="font-size:30px;"
+                        ></i>
+                    </div>
+
+                    <div>
+
+                        <h5
+                            class="modal-title mb-0"
+                            style="font-weight:600;"
+                        >
+                            Upload Dokumen
+                        </h5>
+
+                        <small>
+                            Upload file ke Cloudflare R2
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal"
+                ></button>
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <form
+                    id="formUploadDocument"
+                    enctype="multipart/form-data"
+                >
+
+                    <input
+                        type="hidden"
+                        name="document_id"
+                        value="<?= htmlspecialchars($doc['document_id']) ?>"
+                    >
+
+
+                    <div class="mb-3">
+
+                        <label class="form-label fw-bold">
+                            Pilih File
+                        </label>
+
+                        <div
+                            style="
+                                border:2px dashed var(--theme-border);
+                                border-radius:12px;
+                                padding:25px;
+                                text-align:center;
+                            "
+                        >
+
+                            <i
+                                class="ri-file-upload-line"
+                                style="
+                                    font-size:45px;
+                                    color:var(--theme-primary);
+                                "
+                            ></i>
+
+                            <div class="mt-2">
+
+                                <input
+                                    type="file"
+                                    name="file"
+                                    id="uploadDocumentFile"
+                                    class="form-control"
+                                    required
+                                    accept="
+                                        .pdf,
+                                        .doc,
+                                        .docx,
+                                        .xls,
+                                        .xlsx,
+                                        .ppt,
+                                        .pptx,
+                                        .jpg,
+                                        .jpeg,
+                                        .png
+                                    "
+                                >
+
+                            </div>
+
+                            <small class="text-muted d-block mt-2">
+                                PDF, DOC, DOCX, XLS, XLSX, PPT, PPTX,
+                                JPG, JPEG, PNG
+                            </small>
+
+                            <small class="text-muted">
+                                Maksimal 10 MB
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Nama file yang dipilih -->
+
+                    <div
+                        id="selectedFileInfo"
+                        class="alert alert-light d-none"
+                    >
+
+                        <div class="d-flex align-items-center">
+
+                            <i
+                                id="selectedFileIcon"
+                                class="ri-file-line me-2"
+                                style="font-size:25px;"
+                            ></i>
+
+                            <div>
+
+                                <strong id="selectedFileName">
+                                    -
+                                </strong>
+
+                                <div
+                                    id="selectedFileSize"
+                                    class="small text-muted"
+                                >
+                                    -
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Progress -->
+
+                    <div
+                        id="uploadProgressWrapper"
+                        class="d-none"
+                    >
+
+                        <div class="d-flex justify-content-between mb-1">
+
+                            <small>
+                                Uploading...
+                            </small>
+
+                            <small id="uploadProgressText">
+                                0%
+                            </small>
+
+                        </div>
+
+                        <div
+                            class="progress"
+                            style="height:8px;"
+                        >
+
+                            <div
+                                id="uploadProgressBar"
+                                class="progress-bar"
+                                role="progressbar"
+                                style="width:0%;"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-light"
+                    data-bs-dismiss="modal"
+                    id="btnCancelUpload"
+                >
+                    Batal
+                </button>
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="btnUploadDocument"
+                >
+                    <i class="ri-upload-2-line me-1"></i>
+                    Upload
+                </button>
+
+            </div>
+
+        </div>
+
     </div>
 </div>
 
@@ -662,4 +943,354 @@
             btnSimpan.innerHTML = originalText;
         });
     }
+</script>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const fileInput =
+        document.getElementById('uploadDocumentFile');
+
+    const selectedFileInfo =
+        document.getElementById('selectedFileInfo');
+
+    const selectedFileName =
+        document.getElementById('selectedFileName');
+
+    const selectedFileSize =
+        document.getElementById('selectedFileSize');
+
+    const btnUpload =
+        document.getElementById('btnUploadDocument');
+
+
+    // ============================================================
+    // TAMPILKAN FILE YANG DIPILIH
+    // ============================================================
+
+    fileInput.addEventListener('change', function () {
+
+        if (!this.files.length) {
+
+            selectedFileInfo.classList.add('d-none');
+
+            return;
+        }
+
+        const file = this.files[0];
+
+        selectedFileName.textContent =
+            file.name;
+
+        selectedFileSize.textContent =
+            formatFileSize(file.size);
+
+        selectedFileInfo.classList.remove(
+            'd-none'
+        );
+
+    });
+
+
+    // ============================================================
+    // TOMBOL UPLOAD
+    // ============================================================
+
+    btnUpload.addEventListener(
+        'click',
+        function () {
+
+            if (!fileInput.files.length) {
+
+                alert(
+                    'Silakan pilih file terlebih dahulu.'
+                );
+
+                return;
+            }
+
+
+            const file =
+                fileInput.files[0];
+
+
+            // Maksimal 20 MB
+            const maxSize =
+                10 * 1024 * 1024;
+
+
+            if (file.size > maxSize) {
+
+                alert(
+                    'Ukuran file maksimal 10 MB.'
+                );
+
+                return;
+            }
+
+
+            const form =
+                document.getElementById(
+                    'formUploadDocument'
+                );
+
+
+            const formData =
+                new FormData(form);
+
+
+            // ====================================================
+            // UI
+            // ====================================================
+
+            btnUpload.disabled = true;
+
+            document.getElementById(
+                'btnCancelUpload'
+            ).disabled = true;
+
+
+            const originalButton =
+                btnUpload.innerHTML;
+
+
+            btnUpload.innerHTML =
+                '<span class="spinner-border spinner-border-sm me-2"></span>' +
+                'Uploading...';
+
+
+            document
+                .getElementById(
+                    'uploadProgressWrapper'
+                )
+                .classList.remove('d-none');
+
+
+            // ====================================================
+            // XHR
+            // ====================================================
+
+            const xhr =
+                new XMLHttpRequest();
+
+
+            xhr.open(
+                'POST',
+                'layout/upload-document.php',
+                true
+            );
+
+
+            // ====================================================
+            // PROGRESS
+            // ====================================================
+
+            xhr.upload.addEventListener(
+                'progress',
+                function (event) {
+
+                    if (!event.lengthComputable) {
+                        return;
+                    }
+
+
+                    const percent =
+                        Math.round(
+                            (event.loaded /
+                                event.total) *
+                            100
+                        );
+
+
+                    document.getElementById(
+                        'uploadProgressBar'
+                    ).style.width =
+                        percent + '%';
+
+
+                    document.getElementById(
+                        'uploadProgressText'
+                    ).textContent =
+                        percent + '%';
+
+                }
+            );
+
+
+            // ====================================================
+            // SELESAI
+            // ====================================================
+
+            xhr.onload = function () {
+
+                let data;
+
+
+                try {
+
+                    data = JSON.parse(xhr.responseText);
+
+                } catch (error) {
+
+                    console.error('=== RESPONSE SERVER ===');
+                    console.error(xhr.responseText);
+                    console.error('=== HTTP STATUS ===');
+                    console.error(xhr.status);
+                    console.error('=== PARSE ERROR ===');
+                    console.error(error);
+
+                    alert(
+                        'Server mengembalikan response yang bukan JSON.\n\n' +
+                        'Silakan tekan F12 → Console untuk melihat error PHP.'
+                    );
+
+                    resetUploadButton();
+
+                    return;
+                }
+
+
+                if (
+                    xhr.status >= 200 &&
+                    xhr.status < 300 &&
+                    data.success
+                ) {
+
+                    alert(
+                        data.message ||
+                        'File berhasil diupload.'
+                    );
+
+
+                    // Tutup modal
+                    const modalElement =
+                        document.getElementById(
+                            'modalUploadDocument'
+                        );
+
+
+                    const modal =
+                        bootstrap.Modal
+                            .getInstance(
+                                modalElement
+                            );
+
+
+                    if (modal) {
+                        modal.hide();
+                    }
+
+
+                    // Refresh halaman
+                    location.reload();
+
+                } else {
+
+                    alert(
+                        data.message ||
+                        'Upload file gagal.'
+                    );
+
+
+                    resetUploadButton();
+
+                }
+
+            };
+
+
+            // ====================================================
+            // ERROR NETWORK
+            // ====================================================
+
+            xhr.onerror = function () {
+
+                console.error(
+                    'Upload network error'
+                );
+
+
+                alert(
+                    'Terjadi kesalahan koneksi saat upload.'
+                );
+
+
+                resetUploadButton();
+
+            };
+
+
+            // ====================================================
+            // KIRIM
+            // ====================================================
+
+            xhr.send(formData);
+
+
+            // ====================================================
+            // RESET BUTTON
+            // ====================================================
+
+            function resetUploadButton() {
+
+                btnUpload.disabled =
+                    false;
+
+
+                document.getElementById(
+                    'btnCancelUpload'
+                ).disabled = false;
+
+
+                btnUpload.innerHTML =
+                    originalButton;
+
+            }
+
+        }
+    );
+
+
+    // ============================================================
+    // FORMAT UKURAN FILE
+    // ============================================================
+
+    function formatFileSize(bytes) {
+
+        if (bytes === 0) {
+            return '0 Bytes';
+        }
+
+
+        const units = [
+            'Bytes',
+            'KB',
+            'MB',
+            'GB'
+        ];
+
+
+        const i =
+            Math.floor(
+                Math.log(bytes) /
+                Math.log(1024)
+            );
+
+
+        return (
+            parseFloat(
+                (
+                    bytes /
+                    Math.pow(1024, i)
+                ).toFixed(2)
+            ) +
+            ' ' +
+            units[i]
+        );
+
+    }
+
+});
+
 </script>

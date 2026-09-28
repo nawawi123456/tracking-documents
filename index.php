@@ -66,6 +66,7 @@ if (!file_exists($file)) {
     <?php include $file; ?>
 </main>
 
+    <?php //echo password_hash("123456", PASSWORD_DEFAULT); ?>
 
 <!-- JAVASCRIPT -->
 <script src="libs/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -75,10 +76,10 @@ if (!file_exists($file)) {
 <script src="js/pages/plugins/lord-icon-2.1.0.js"></script>
 <script src="js/plugins.js"></script>
 <!-- App js -->
-<script src="js/app.js"></script>
+<script src="js/app.js?v=20260924-1"></script>
 
 <!-- Your custom scripts -->
-<script src="layout.js"></script>
+<script src="layout.js?v=20260924-1"></script>
 
 </body>
 </html>
