@@ -61,6 +61,11 @@ if (empty($document['file_key'])) {
 // CEK HAK AKSES
 $bolehDownload = false;
 
+// Jika user adalah ADMIN
+if ((string)$userId === 'USER-999') {
+    $bolehDownload = true;
+}
+
 // Jika user adalah pembuat dokumen
 if ((string)$document['created_by'] === (string)$userId) {
     $bolehDownload = true;
